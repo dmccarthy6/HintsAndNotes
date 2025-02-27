@@ -21,7 +21,7 @@ struct HNLogger {
     }
 }
 
-enum Log {
+enum HNLog {
     static func debug(category: HNLogger.Category, message: String) {
         let logger = HNLogger(category: category).logger
         logger.log(level: .debug, "\(message)")
