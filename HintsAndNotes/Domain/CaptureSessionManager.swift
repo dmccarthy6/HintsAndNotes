@@ -10,7 +10,9 @@ import SwiftUI
 
 final class CaptureSessionManager: NSObject {
     enum CaptureSessionError: Error {
-
+        case addInputs
+        case addOutputs
+        case captureDevice
     }
 
     let session = AVCaptureSession()
@@ -46,15 +48,14 @@ final class CaptureSessionManager: NSObject {
 
     private func addInputs() throws {
         guard let device = bestDevice(for: .video, at: .back) else {
-            return // TODO: Throw here
+            throw CaptureSessionError.captureDevice
         }
         let input = try AVCaptureDeviceInput(device: device)
 
         if session.canAddInput(input) {
             session.addInput(input)
         } else {
-            print("CAN NOT ADD INPUTS")
-            // TODO: Throw
+            throw CaptureSessionError.addInputs
         }
     }
 
@@ -62,8 +63,7 @@ final class CaptureSessionManager: NSObject {
         if session.canAddOutput(photoOutput) {
             session.addOutput(photoOutput)
         } else {
-            print("CAN NOT ADD OUTPUTS")
-            // TODO: Throw error
+            throw CaptureSessionError.addOutputs
         }
     }
 
@@ -92,14 +92,38 @@ final class CaptureSessionManager: NSObject {
     }
 
     private func photoOutputSettings() -> AVCapturePhotoSettings {
-        let settings = AVCapturePhotoSettings()
+        var settings = AVCapturePhotoSettings()
+
+        // Add HEIC photos if supported
+        if photoOutput.availablePhotoCodecTypes.contains(.hevc) {
+            settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.hevc])
+        }
 
         if let previewPhotoPixelFormatType = settings.availablePreviewPhotoPixelFormatTypes.first {
             settings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPhotoPixelFormatType]
         }
         return settings
     }
+
+    private func imageOrientation() -> UIImage.Orientation {
+        let currentDevice = UIDevice.current
+        currentDevice.beginGeneratingDeviceOrientationNotifications()
+        let deviceOrientation = currentDevice.orientation
+
+        switch deviceOrientation {
+        case .portrait: return .right
+        case .portraitUpsideDown: return .down
+        case .landscapeLeft: return .left
+        case .landscapeRight: return .right
+        case .unknown: return .up
+        case .faceUp: return .right
+        case .faceDown: return .right
+        @unknown default: return .right
+        }
+    }
 }
+
+// MARK: - AVCapturePhotoCaptureDelegate
 
 extension CaptureSessionManager: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput,
@@ -109,44 +133,13 @@ extension CaptureSessionManager: AVCapturePhotoCaptureDelegate {
             photoContinuation?.resume(throwing: error)
             photoContinuation = nil
             return
-        } else if let cgImage = photo.cgImageRepresentation(),
-                  let orientationInt = photo.metadata[String(kCGImagePropertyOrientation)] as? UInt32,
-                  let imageOrientation = UIImage.Orientation.orientation(from: orientationInt) {
+        } else if let cgImage = photo.cgImageRepresentation() {
 
             let image = UIImage(cgImage: cgImage,
                                 scale: 1,
-                                orientation: imageOrientation)
+                                orientation: imageOrientation())
             photoContinuation?.resume(returning: image)
             photoContinuation = nil
         }
-    }
-}
-
-private extension UIImage.Orientation {
-    init(_ cgOrientation: CGImagePropertyOrientation) {
-        switch cgOrientation {
-        case .up: self = .up
-        case .upMirrored: self = .upMirrored
-        case .down: self = .down
-        case .downMirrored: self = .downMirrored
-        case .leftMirrored: self = .leftMirrored
-        case .right: self = .rightMirrored
-        case .rightMirrored: self = .rightMirrored
-        case .left: self = .left
-        }
-        HNLog.debug(category: .captureSession,
-                    message: "Image orientation is: \(cgOrientation)")
-    }
-
-    static func orientation(from orientationRaw: UInt32) -> UIImage.Orientation? {
-        var orientation: UIImage.Orientation?
-
-        if let cgOrientation = CGImagePropertyOrientation(rawValue: orientationRaw) {
-            orientation = UIImage.Orientation(cgOrientation)
-        } else {
-            HNLog.debug(category: .captureSession, message: "Orientation is nil")
-            orientation = nil
-        }
-        return orientation
     }
 }
