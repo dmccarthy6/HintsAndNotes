@@ -10,6 +10,7 @@ import OSLog
 struct HNLogger {
     enum Category: String {
         case captureSession
+        case database
         case imagePicker
         case permissions
     }
