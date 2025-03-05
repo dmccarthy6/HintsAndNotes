@@ -12,11 +12,13 @@ struct HNTextView: View {
     let foreground: Color
     let background: Color
     let font: Font
+    let isBold: Bool
     let multilineAlignment: TextAlignment
 
     var body: some View {
         Text(text)
             .font(font)
+            .bold(isBold)
             .foregroundStyle(foreground)
             .background(background)
             .multilineTextAlignment(multilineAlignment)
@@ -24,14 +26,16 @@ struct HNTextView: View {
     }
 
     init(text: String,
-         foreground: Color,
-         background: Color,
+         foreground: Color = .black,
+         background: Color = .white,
          font: Font = .body,
+         bold: Bool = false,
          multilineAlignment: TextAlignment = .center) {
         self.text = text
         self.foreground = foreground
         self.background = background
         self.font = font
+        self.isBold = bold
         self.multilineAlignment = multilineAlignment
     }
 }
