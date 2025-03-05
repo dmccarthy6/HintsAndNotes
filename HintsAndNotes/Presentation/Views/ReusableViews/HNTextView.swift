@@ -17,7 +17,6 @@ struct HNTextView: View {
     var body: some View {
         Text(text)
             .font(font)
-            .padding()
             .foregroundStyle(foreground)
             .background(background)
             .multilineTextAlignment(multilineAlignment)

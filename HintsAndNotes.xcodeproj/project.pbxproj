@@ -29,9 +29,22 @@
 		61DA8FB22D6CFAAF00938E6B /* HintsAndNotesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HintsAndNotesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		611BCFF02D7900230091303F /* Exceptions for "HintsAndNotes" folder in "HintsAndNotesTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Data/Service/Database/Datamodels/HintsAndNotes.xcdatamodeld,
+			);
+			target = 61DA8FA72D6CFAAF00938E6B /* HintsAndNotesTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		61DA8F9A2D6CFAAD00938E6B /* HintsAndNotes */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				611BCFF02D7900230091303F /* Exceptions for "HintsAndNotes" folder in "HintsAndNotesTests" target */,
+			);
 			path = HintsAndNotes;
 			sourceTree = "<group>";
 		};
