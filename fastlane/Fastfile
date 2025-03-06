@@ -1,0 +1,57 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Description of what the lane does"
+  lane :test_app do
+    run_tests(scheme: "HintsAndNotes")
+  end
+
+  desc ""
+  lane :lint do |options|
+    swiftlint(
+      mode:options[:mode],
+      output_file: "swiftLint.result.json",
+      raise_if_swiftlint_error: true,
+      ignore_exit_status: true
+    )
+  end
+
+  desc "Build app and create the ipa"
+  lane :build_app do
+    gym(
+      project: "HintsAndNotes.xcproj",
+      configuration: "Debug", #TODO: should I user input this???
+      silent: true,
+      clean: true,
+      output_name: "HintsAndNotes.ipa",
+    )
+  end
+
+  desc ""
+  lane :beta do
+    pilot(
+      api_key: "",
+      username: apple_id,
+    )
+  end
+
+  desc ""
+  lane :something do
+  end
+
+end

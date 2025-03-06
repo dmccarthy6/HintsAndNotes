@@ -1,0 +1,7 @@
+app_identifier("com.dylanmccarthy.HintsAndNotes") # The bundle identifier of your app
+apple_id("mccarthy.dylan@gmail.com") # Your Apple Developer Portal username
+apple_
+
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
