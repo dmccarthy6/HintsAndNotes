@@ -19,7 +19,7 @@ struct LabelRow: View {
             if let image {
                 image
             } else {
-                Image(systemName: "photo")//wineglass
+                Icons.photo//wineglass
                     .resizable()
                     .frame(width: 40, height: 40)
             }
@@ -35,7 +35,7 @@ struct LabelRow: View {
             }
             .padding(.leading)
             Spacer()
-            Image(systemName: "chevron.right")
+            Icons.chevronRight
         }
     }
 }
