@@ -19,11 +19,13 @@ struct CameraView: View {
                 Spacer()
                 CameraCaptureButton(backgroundColor: .white) {
                     viewModel.takePhoto()
-                }.padding(.trailing, 60)
+                }
+                .padding(.trailing, 60)
                 Spacer()
             }
             .padding(.horizontal)
         }
+        .navigationTitle("Add Label")
         .task {
             await viewModel.requestPermissionIfNeededAndConfigureSession()
         }

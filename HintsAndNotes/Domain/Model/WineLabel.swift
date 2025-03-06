@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct WineLabel {
+struct WineLabel: Hashable {
+    var id: String
     /// The date the wine label is added/created
     let created: Date
     /// Wine name
@@ -22,4 +23,21 @@ struct WineLabel {
     let image: Data
     /// Notes about the wine, if any.
     let notes: String
+
+    init(created: Date,
+         name: String,
+         type: String,
+         color: String,
+         vintage: Double,
+         image: Data,
+         notes: String) {
+        self.id = UUID().uuidString
+        self.created = created
+        self.name = name
+        self.type = type
+        self.color = color
+        self.vintage = vintage
+        self.image = image
+        self.notes = notes
+    }
 }
