@@ -25,7 +25,10 @@ struct CameraView: View {
             }
             .padding(.horizontal)
         }
-        .navigationTitle("Add Label")
+        .navigationBar(title: "Add Label",
+                       trailingLabel: "Dismiss") {
+            // TODO: Dismiss view
+        }
         .task {
             await viewModel.requestPermissionIfNeededAndConfigureSession()
         }

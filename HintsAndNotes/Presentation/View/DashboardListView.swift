@@ -18,7 +18,12 @@ struct DashboardListView: View {
                 }
         }
         .listStyle(.plain)
-        .navigationTitle("My Labels")
+        .navigationBar(title: "My Labels",
+                       leadingAction: {
+            print("SHOW SETTINGS")
+        }, trailingAction: {
+            viewModel.showCamera = true
+        })
     }
 }
 

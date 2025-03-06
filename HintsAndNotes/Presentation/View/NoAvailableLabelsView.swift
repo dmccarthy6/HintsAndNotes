@@ -19,7 +19,12 @@ struct NoAvailableLabelsView: View {
             }
             .padding(.horizontal)
         }
-        .navigationTitle("My Labels")
+        .navigationBar(title: "My Labels",
+                       leadingAction: {
+            print("Show Settings ")
+        }, trailingAction: {
+            viewModel.showCamera.toggle()
+        })
     }
 }
 
