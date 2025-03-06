@@ -37,7 +37,6 @@ class CoreDataStack {
                 HNLog.debug(category: .database, message: "Error loading persistent stores. Error: \(error)")
             }
         }
-        container.viewContext.automaticallyMergesChangesFromParent = true
         return container
     }()
 
@@ -49,5 +48,6 @@ class CoreDataStack {
 
     init(inMemory: Bool = false) {
         self.inMemory = inMemory
+        self.persistentContainer.viewContext.hasChanges
     }
 }
