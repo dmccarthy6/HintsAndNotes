@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CameraCaptureButton: View {
+struct CameraButton: View {
     let backgroundColor: Color
     let action: VoidClosure
 
@@ -26,5 +26,5 @@ struct CameraCaptureButton: View {
 }
 
 #Preview {
-    CameraCaptureButton(backgroundColor: .red, action: {})
+    CameraButton(backgroundColor: .red, action: {})
 }
