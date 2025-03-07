@@ -17,7 +17,7 @@ struct CameraView: View {
             HStack {
                 CameraThumbnailView(image: viewModel.image)
                 Spacer()
-                CameraButton(backgroundColor: .white) {
+                CameraButton(background: .white) {
                     viewModel.takePhoto()
                 }
                 .padding(.trailing, 60)

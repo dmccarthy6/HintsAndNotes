@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct CameraButton: View {
-    let backgroundColor: Color
+    let background: Color
+    let isDisabled: Bool
     let action: VoidClosure
 
     var body: some View {
         Button(action: action) {
             Circle()
-                .foregroundStyle(backgroundColor)
+                .foregroundStyle(background)
                 .frame(width: 60, height: 60)
                 .overlay {
                     Circle()
@@ -22,9 +23,18 @@ struct CameraButton: View {
                         .frame(width: 55, height: 55)
                 }
         }
+        .disabled(isDisabled)
+    }
+
+    init(background: Color,
+         isDisabled: Bool = false,
+         action: @escaping VoidClosure) {
+        self.background = background
+        self.isDisabled = isDisabled
+        self.action = action
     }
 }
 
 #Preview {
-    CameraButton(backgroundColor: .red, action: {})
+    CameraButton(background: .red, action: {})
 }
