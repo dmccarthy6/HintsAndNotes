@@ -1,15 +1,11 @@
 //
-//  Color+EnvironmentValues.swift
+//  Database+EnvironmentValues.swift
 //  HintsAndNotes
 //
-//  Created by Dylan  on 3/5/25.
+//  Created by Dylan  on 3/7/25.
 //
 
 import SwiftUI
-
-private struct ColorPaletteKey: EnvironmentKey {
-    static let defaultValue = Color.Palette.main
-}
 
 extension EnvironmentValues {
     var colorPalette: Color.Palette {
@@ -18,6 +14,12 @@ extension EnvironmentValues {
         }
         set {
             self[ColorPaletteKey.self] = newValue
+        }
+    }
+
+    var wineLabelRepo: WineLabelRepo {
+        get {
+            return self[WineLabelRepoKey.self]
         }
     }
 }
