@@ -7,28 +7,24 @@
 
 import SwiftUI
 
-struct NoAvailableLabelsView: View {
+struct NoDataView: View {
+    @Environment(Navigator.self) var navigator
     let viewModel: DashboardViewModel
 
     var body: some View {
         VStack {
+            Spacer()
             HNTextView(text: viewModel.noLabelsText)
             Spacer()
             HNButton(title: "+",
                      font: .largeTitle) {
                 viewModel.showCamera.toggle()
             }
-            .padding(.horizontal)
-        }
-        .navigationBar(title: "My Labels",
-                       leadingAction: {
-            print("Show Settings ")
-        }, trailingAction: {
-            viewModel.showCamera.toggle()
-        })
+            Spacer()
+        }.padding(.horizontal)
     }
 }
 
 #Preview {
-    NoAvailableLabelsView(viewModel: DashboardViewModel(repo: WineLabelRepo()))
+    NoDataView(viewModel: DashboardViewModel(repo: WineLabelRepo()))
 }
