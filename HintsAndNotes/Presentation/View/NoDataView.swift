@@ -18,7 +18,7 @@ struct NoDataView: View {
             Spacer()
             HNButton(title: "+",
                      font: .largeTitle) {
-                viewModel.showCamera.toggle()
+                navigator.navigate(to: .camera)
             }
             Spacer()
         }.padding(.horizontal)

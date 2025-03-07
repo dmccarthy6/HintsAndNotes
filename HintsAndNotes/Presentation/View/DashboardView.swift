@@ -21,17 +21,12 @@ struct DashboardView: View {
                                leadingAction: {
                     print("SHOW SETTINGS")
                 }, trailingAction: {
-                    viewModel.showCamera = true
+                    navigator.navigate(to: .camera)
                 })
         }
         .environment(navigator)
         .task {
             viewModel.getWines()
-        }
-        .sheet(isPresented: $viewModel.showCamera) {
-            NavigationView {
-                CameraView()
-            }
         }
     }
 }
