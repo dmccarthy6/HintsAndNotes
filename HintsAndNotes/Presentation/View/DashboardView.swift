@@ -22,6 +22,7 @@ struct DashboardView: View {
         .navigationDestination(for: Navigator.Routes.self, destination: { route in
             navigator.showView(for: route)
         })
+        .environment(navigator)
         .task {
             viewModel.getWines()
         }

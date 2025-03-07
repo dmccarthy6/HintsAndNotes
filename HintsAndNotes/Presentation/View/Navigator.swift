@@ -10,8 +10,9 @@ import SwiftUI
 @Observable
 class Navigator {
     enum Routes {
-        case dashboard
         case addLabel
+        case camera
+        case dashboard
         case settings
     }
 
@@ -21,20 +22,17 @@ class Navigator {
         path = NavigationPath()
     }
 
-    func showView(for route: Routes) -> some View {
+    func navigate(to route: Routes) {
         path.append(route)
-        return destination(for: route)
     }
 
     @ViewBuilder
     func destination(for route: Routes) -> some View {
         switch route {
-        case .dashboard:
-            DashboardView()
-        case .addLabel:
-            CameraView()
-        case .settings:
-            Text("TODO: Settings View")
+        case .addLabel: WineLabelView()
+        case .camera: CameraView()
+        case .dashboard: DashboardView()
+        case .settings: Text("TODO: Settings View")
         }
     }
 }
