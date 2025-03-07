@@ -8,22 +8,24 @@
 import SwiftUI
 
 struct DashboardListView: View {
-    let viewModel: DashboardViewModel
+    private let viewModel: DashboardViewModel
 
     var body: some View {
-        List(viewModel.allWines, id: \.id) { wine in
-            LabelRow(name: wine.name, type: wine.type, image: nil)
-                .onTapGesture {
-                    viewModel.selectedWine = wine.id
-                }
+        if !viewModel.allWines.isEmpty {
+            List(viewModel.allWines, id: \.id) { wine in
+                LabelRow(name: wine.name, type: wine.type, image: nil)
+                    .onTapGesture {
+                        viewModel.selectedWine = wine.id
+                    }
+            }
+            .listStyle(.plain)
+        } else {
+            NoDataView(viewModel: viewModel)
         }
-        .listStyle(.plain)
-        .navigationBar(title: "My Labels",
-                       leadingAction: {
-            print("SHOW SETTINGS")
-        }, trailingAction: {
-            viewModel.showCamera = true
-        })
+    }
+
+    init(viewModel: DashboardViewModel) {
+        self.viewModel = viewModel
     }
 }
 

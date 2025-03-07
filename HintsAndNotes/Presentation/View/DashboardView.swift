@@ -13,15 +13,17 @@ struct DashboardView: View {
 
     var body: some View {
         NavigationStack(path: $navigator.path) {
-            if !viewModel.allWines.isEmpty {
-                DashboardListView(viewModel: viewModel)
-            } else {
-                NoAvailableLabelsView(viewModel: viewModel)
-            }
+            DashboardListView(viewModel: viewModel)
+                .navigationDestination(for: Navigator.Routes.self, destination: { route in
+                    navigator.destination(for: route)
+                })
+                .navigationBar(title: "My Labels",
+                               leadingAction: {
+                    print("SHOW SETTINGS")
+                }, trailingAction: {
+                    viewModel.showCamera = true
+                })
         }
-        .navigationDestination(for: Navigator.Routes.self, destination: { route in
-            navigator.showView(for: route)
-        })
         .environment(navigator)
         .task {
             viewModel.getWines()
