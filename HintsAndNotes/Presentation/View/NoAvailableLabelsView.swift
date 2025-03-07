@@ -14,7 +14,8 @@ struct NoAvailableLabelsView: View {
         VStack {
             HNTextView(text: viewModel.noLabelsText)
             Spacer()
-            AddWineButton {
+            HNButton(title: "+",
+                     font: .largeTitle) {
                 viewModel.showCamera.toggle()
             }
             .padding(.horizontal)
